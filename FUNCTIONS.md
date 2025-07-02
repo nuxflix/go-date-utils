@@ -37,15 +37,19 @@ newYear := dateutils.SetYear(date, 2025)  // Change to 2025
 ## 📅 Parsing Functions
 
 ### `Parse(dateStr string, timezone *time.Location) (time.Time, error)`
+
 Parse a date string using common formats automatically.
 
 ### `ParseISO(isoStr string, timezone *time.Location) (time.Time, error)`
+
 Parse an ISO 8601 formatted date string.
 
 ### `ParseWithFormat(dateStr, format string, timezone *time.Location) (time.Time, error)`
+
 Parse a date string using a specific format.
 
 ### `IsValidISO(isoStr string) bool`
+
 Check if a string is valid ISO 8601 format.
 
 ---
@@ -53,15 +57,19 @@ Check if a string is valid ISO 8601 format.
 ## 📝 Formatting Functions
 
 ### `Format(t time.Time, format string, timezone *time.Location) (string, error)`
+
 Format a time using predefined format constants.
 
 ### `FormatCustom(t time.Time, customFormat string, timezone *time.Location) (string, error)`
+
 Format using user-friendly placeholders (YYYY-MM-DD, HH:mm, etc.).
 
 ### `FormatSafe(t time.Time, format string, timezone *time.Location) string`
+
 Safe formatting that returns empty string on error.
 
 ### `FormatWithDefault(t time.Time, format string, timezone *time.Location, defaultValue string) string`
+
 Formatting with fallback default value.
 
 ---
@@ -69,6 +77,7 @@ Formatting with fallback default value.
 ## 📊 Get Functions
 
 ### Date Components
+
 - `GetYear(t time.Time) int` - Get year component
 - `GetMonth(t time.Time) int` - Get month (1-12)
 - `GetDate(t time.Time) int` - Get day of month (1-31)
@@ -77,12 +86,14 @@ Formatting with fallback default value.
 - `GetQuarter(t time.Time) int` - Get quarter (1-4)
 
 ### Time Components
+
 - `GetHours(t time.Time) int` - Get hours (0-23)
 - `GetMinutes(t time.Time) int` - Get minutes (0-59)
 - `GetSeconds(t time.Time) int` - Get seconds (0-59)
 - `GetMilliseconds(t time.Time) int` - Get milliseconds (0-999)
 
 ### Week Functions
+
 - `GetWeek(t time.Time) int` - Get ISO week number (1-53)
 - `GetWeekOfMonth(t time.Time) int` - Get week of month (1-6)
 - `GetWeekYear(t time.Time) int` - Get ISO week year
@@ -91,7 +102,8 @@ Formatting with fallback default value.
 
 ## ⚙️ Set Functions
 
-### Date Components
+### Set Date Components
+
 - `SetYear(t time.Time, year int) time.Time` - Set year
 - `SetMonth(t time.Time, month int) time.Time` - Set month (1-12)
 - `SetDate(t time.Time, day int) time.Time` - Set day of month
@@ -99,7 +111,8 @@ Formatting with fallback default value.
 - `SetDayOfYear(t time.Time, dayOfYear int) time.Time` - Set day of year
 - `SetQuarter(t time.Time, quarter int) time.Time` - Set quarter
 
-### Time Components
+### Set Time Components
+
 - `SetHours(t time.Time, hours int) time.Time` - Set hours
 - `SetMinutes(t time.Time, minutes int) time.Time` - Set minutes
 - `SetSeconds(t time.Time, seconds int) time.Time` - Set seconds
@@ -107,7 +120,7 @@ Formatting with fallback default value.
 
 ---
 
-## 📝 Formatting Functions
+## 📝 Formatting Functions Others
 
 ### `Format(t time.Time, format string, timezone *time.Location) (string, error)`
 
@@ -196,74 +209,95 @@ Add days and convert to specified timezone.
 ### Time Unit Differences (Integer)
 
 #### `DifferenceInSeconds(t1, t2 time.Time) int`
+
 Calculate full seconds between times.
 
 #### `DifferenceInMinutes(t1, t2 time.Time) int`
+
 Calculate full minutes between times.
 
 #### `DifferenceInHours(t1, t2 time.Time) int`
+
 Calculate full hours between times.
 
 #### `DifferenceInDays(t1, t2 time.Time) int`
+
 Calculate full days between times.
 
 #### `DifferenceInWeeks(t1, t2 time.Time) int`
+
 Calculate full weeks between times.
 
 #### `DifferenceInMonths(t1, t2 time.Time) int`
+
 Calculate full months between times.
 
 #### `DifferenceInYears(t1, t2 time.Time) int`
+
 Calculate full years between times.
 
 #### `DifferenceInQuarters(t1, t2 time.Time) int`
+
 Calculate full quarters between times.
 
 ### Calendar-Based Differences
 
 #### `DifferenceInCalendarDays(t1, t2 time.Time) int`
+
 Calculate calendar days (ignores time).
 
 #### `DifferenceInCalendarMonths(t1, t2 time.Time) int`
+
 Calculate calendar months (ignores day).
 
 #### `DifferenceInCalendarYears(t1, t2 time.Time) int`
+
 Calculate calendar years (ignores month/day).
 
 #### `DifferenceInCalendarQuarters(t1, t2 time.Time) int`
+
 Calculate calendar quarters (ignores day).
 
 ### Business Days
 
 #### `DifferenceInBusinessDays(t1, t2 time.Time) int`
+
 Calculate business days between times (excludes weekends).
 
 ### Floating-Point Precision
 
 #### `DifferenceInSecondsFloat(t1, t2 time.Time) float64`
+
 Calculate seconds with decimal precision.
 
 #### `DifferenceInMinutesFloat(t1, t2 time.Time) float64`
+
 Calculate minutes with decimal precision.
 
 #### `DifferenceInHoursFloat(t1, t2 time.Time) float64`
+
 Calculate hours with decimal precision.
 
 #### `DifferenceInDaysFloat(t1, t2 time.Time) float64`
+
 Calculate days with decimal precision.
 
 #### `DifferenceInWeeksFloat(t1, t2 time.Time) float64`
+
 Calculate weeks with decimal precision.
 
 ### Absolute Differences (Always Positive)
 
 #### `AbsDifferenceInSeconds(t1, t2 time.Time) int`
+
 Absolute difference in seconds.
 
 #### `AbsDifferenceInMinutes(t1, t2 time.Time) int`
+
 Absolute difference in minutes.
 
 #### `AbsDifferenceInHours(t1, t2 time.Time) int`
+
 Absolute difference in hours.
 
 #### `AbsDifferenceInDays(t1, t2 time.Time) int`
@@ -437,41 +471,53 @@ type Interval struct {
 ### Each Functions
 
 #### `EachDayOfInterval(interval Interval) []time.Time`
+
 Returns all days within the interval (start of each day).
 
 #### `EachWeekOfInterval(interval Interval) []time.Time`
+
 Returns all week starts within the interval (Monday-based).
 
 #### `EachWeekOfIntervalSunday(interval Interval) []time.Time`
+
 Returns all week starts within the interval (Sunday-based).
 
 #### `EachMonthOfInterval(interval Interval) []time.Time`
+
 Returns all month starts within the interval.
 
 #### `EachYearOfInterval(interval Interval) []time.Time`
+
 Returns all year starts within the interval.
 
 #### `EachQuarterOfInterval(interval Interval) []time.Time`
+
 Returns all quarter starts within the interval.
 
 #### `EachHourOfInterval(interval Interval) []time.Time`
+
 Returns all hour starts within the interval.
 
 #### `EachMinuteOfInterval(interval Interval) []time.Time`
+
 Returns all minute starts within the interval.
 
 #### `EachWeekendOfInterval(interval Interval) []time.Time`
+
 Returns all weekend days (Saturday & Sunday) within the interval.
 
 #### `EachBusinessDayOfInterval(interval Interval) []time.Time`
+
 Returns all business days (Monday-Friday) within the interval.
 
 ### Quarter Utilities
 
 #### `StartOfQuarter(t time.Time) time.Time`
+
 Get start of quarter (Q1=Jan, Q2=Apr, Q3=Jul, Q4=Oct).
 
 #### `EndOfQuarter(t time.Time) time.Time`
+
 Get end of quarter with precise timing.
 
 **Examples:**

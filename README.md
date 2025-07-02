@@ -1,4 +1,4 @@
-# 🗓️ go-dateutils
+# 🗓️ go-date-fns
 
 > A modern, functional date utility library for Go, inspired by the beloved date-fns JavaScript library.
 
@@ -7,13 +7,13 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/chmenegatti/go-date-fns)](https://goreportcard.com/report/github.com/chmenegatti/go-date-fns)
 [![Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](https://github.com/chmenegatti/go-date-fns)
 
-**go-dateutils** brings the power and elegance of functional date manipulation to Go. With over **150+ pure, immutable functions**, it provides a comprehensive toolkit for working with dates and times in a safe, predictable, and timezone-aware manner.
+**go-date-fns** brings the power and elegance of functional date manipulation to Go. With over **150+ pure, immutable functions**, it provides a comprehensive toolkit for working with dates and times in a safe, predictable, and timezone-aware manner.
 
 ---
 
-## ✨ Why go-dateutils?
+## ✨ Why go-date-fns?
 
-In the world of Go development, working with dates can be complex and error-prone. **go-dateutils** solves this by providing:
+In the world of Go development, working with dates can be complex and error-prone. **go-date-fns** solves this by providing:
 
 - 🧮 **Pure Functions**: No side effects, original dates never modified
 - 🌍 **Timezone Aware**: Full timezone support across all operations  
@@ -640,7 +640,7 @@ fmt.Printf("Mondays this month: %d\n", len(mondays))
 
 ### Functional Programming
 
-All functions in **go-dateutils** follow functional programming principles:
+All functions in **go-date-fns** follow functional programming principles:
 
 - **Pure Functions**: No side effects or global state mutations
 - **Immutability**: Original time.Time values are never modified
@@ -721,7 +721,7 @@ BenchmarkParse-12             1000000     1543 ns/op    184 B/op     8 allocs/op
 
 ### Custom Format Placeholders
 
-**go-dateutils** supports user-friendly format placeholders:
+**go-date-fns** supports user-friendly format placeholders:
 
 | Placeholder | Description | Example |
 |-------------|-------------|---------|
@@ -766,7 +766,7 @@ formatted := dateutils.FormatWithDefault(date, dateutils.DateISO, nil, "Unknown 
 
 ### WebAssembly Usage
 
-Compile your Go application with **go-dateutils** to WebAssembly:
+Compile your Go application with **go-date-fns** to WebAssembly:
 
 ```bash
 GOOS=js GOARCH=wasm go build -o main.wasm main.go
@@ -829,7 +829,7 @@ const (
 
 ## 🚀 Performance
 
-**go-dateutils** is designed for high performance:
+**go-date-fns** is designed for high performance:
 
 - **Minimal Allocations**: Most operations perform zero or minimal memory allocations
 - **Optimized Algorithms**: Efficient date calculations using Go's time package
@@ -858,7 +858,7 @@ t := time.Now()
 future := t.AddDate(0, 0, 7)  // Add 7 days
 formatted := future.Format("2006-01-02")
 
-// After (using go-dateutils)  
+// After (using go-date-fns)  
 t := time.Now()
 future := dateutils.AddDays(t, 7)
 formatted, _ := dateutils.Format(future, dateutils.DateISO, nil)
@@ -866,7 +866,7 @@ formatted, _ := dateutils.Format(future, dateutils.DateISO, nil)
 
 ### From Other Date Libraries
 
-**go-dateutils** provides a familiar API for developers coming from other ecosystems:
+**go-date-fns** provides a familiar API for developers coming from other ecosystems:
 
 ```javascript
 // JavaScript (date-fns)
@@ -875,7 +875,7 @@ const result = format(addDays(new Date(), 7), 'yyyy-MM-dd')
 ```
 
 ```go
-// Go (go-dateutils)
+// Go (go-date-fns)
 result, _ := dateutils.Format(
     dateutils.AddDays(time.Now(), 7), 
     dateutils.DateISO, 
@@ -887,9 +887,9 @@ result, _ := dateutils.Format(
 
 ## ❓ FAQ
 
-### Q: Why choose go-dateutils over the standard time package?
+### Q: Why choose go-date-fns over the standard time package?
 
-**A:** While Go's `time` package is excellent, **go-dateutils** provides:
+**A:** While Go's `time` package is excellent, **go-date-fns** provides:
 
 - Higher-level, more intuitive functions
 - Consistent error handling patterns  
@@ -897,11 +897,11 @@ result, _ := dateutils.Format(
 - User-friendly formatting with custom placeholders
 - Functional programming approach
 
-### Q: Is go-dateutils thread-safe?
+### Q: Is go-date-fns thread-safe?
 
 **A:** Yes! All functions are pure and immutable, making them inherently thread-safe. You can safely use them in concurrent goroutines without any synchronization.
 
-### Q: Can I use go-dateutils in production?
+### Q: Can I use go-date-fns in production?
 
 **A:** Absolutely! The library is production-ready with:
 
@@ -912,11 +912,11 @@ result, _ := dateutils.Format(
 
 ### Q: How does performance compare to the standard library?
 
-**A:** **go-dateutils** is built on top of Go's `time` package, so performance is comparable. Some operations may have minimal overhead due to additional safety checks and features.
+**A:** **go-date-fns** is built on top of Go's `time` package, so performance is comparable. Some operations may have minimal overhead due to additional safety checks and features.
 
 ### Q: Does it support all timezones?
 
-**A:** Yes! **go-dateutils** uses Go's standard timezone database, supporting all IANA timezone identifiers.
+**A:** Yes! **go-date-fns** uses Go's standard timezone database, supporting all IANA timezone identifiers.
 
 ---
 
