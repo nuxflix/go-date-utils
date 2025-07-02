@@ -92,31 +92,31 @@ func TestSetDay(t *testing.T) {
 
 func TestSetDayOfYear(t *testing.T) {
 	tests := []struct {
-		name        string
-		date        time.Time
-		dayOfYear   int
-		expectedDay int
+		name          string
+		date          time.Time
+		dayOfYear     int
+		expectedDay   int
 		expectedMonth time.Month
 	}{
 		{
-			name:        "set to January 1st",
-			date:        time.Date(2024, 6, 15, 12, 30, 45, 0, time.UTC),
-			dayOfYear:   1,
-			expectedDay: 1,
+			name:          "set to January 1st",
+			date:          time.Date(2024, 6, 15, 12, 30, 45, 0, time.UTC),
+			dayOfYear:     1,
+			expectedDay:   1,
 			expectedMonth: time.January,
 		},
 		{
-			name:        "set to February 29th (leap year)",
-			date:        time.Date(2024, 6, 15, 12, 30, 45, 0, time.UTC),
-			dayOfYear:   60, // Feb 29 in leap year
-			expectedDay: 29,
+			name:          "set to February 29th (leap year)",
+			date:          time.Date(2024, 6, 15, 12, 30, 45, 0, time.UTC),
+			dayOfYear:     60, // Feb 29 in leap year
+			expectedDay:   29,
 			expectedMonth: time.February,
 		},
 		{
-			name:        "set beyond year limit (adjust to last day)",
-			date:        time.Date(2024, 6, 15, 12, 30, 45, 0, time.UTC),
-			dayOfYear:   400,
-			expectedDay: 31,
+			name:          "set beyond year limit (adjust to last day)",
+			date:          time.Date(2024, 6, 15, 12, 30, 45, 0, time.UTC),
+			dayOfYear:     400,
+			expectedDay:   31,
 			expectedMonth: time.December,
 		},
 	}
@@ -412,7 +412,7 @@ func TestSetQuarter(t *testing.T) {
 // Test immutability
 func TestSetFunctionsImmutability(t *testing.T) {
 	original := time.Date(2024, 6, 15, 12, 30, 45, 123456789, time.UTC)
-	
+
 	// Test each set function doesn't modify the original
 	SetDate(original, 20)
 	SetDay(original, 0)
@@ -424,7 +424,7 @@ func TestSetFunctionsImmutability(t *testing.T) {
 	SetMonth(original, 12)
 	SetYear(original, 2025)
 	SetQuarter(original, 4)
-	
+
 	// Original should be unchanged
 	expected := time.Date(2024, 6, 15, 12, 30, 45, 123456789, time.UTC)
 	if !original.Equal(expected) {

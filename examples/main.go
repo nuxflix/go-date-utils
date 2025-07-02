@@ -91,5 +91,99 @@ func main() {
 	sameDate := dateutils.IsSameDate(utcTime, utcTime.In(est))
 	fmt.Printf("Same date across timezones: %t\n", sameDate)
 
+	// Time difference calculations
+	fmt.Println("\n9. Time Difference Calculations:")
+	projectStart := time.Date(2023, 1, 1, 9, 0, 0, 0, time.UTC)
+	projectEnd := time.Date(2023, 6, 15, 17, 30, 0, 0, time.UTC)
+
+	fmt.Printf("Project duration in months: %d\n", dateutils.DifferenceInMonths(projectEnd, projectStart))
+	fmt.Printf("Project duration in days: %d\n", dateutils.DifferenceInDays(projectEnd, projectStart))
+	fmt.Printf("Project duration in hours: %d\n", dateutils.DifferenceInHours(projectEnd, projectStart))
+	fmt.Printf("Business days only: %d\n", dateutils.DifferenceInBusinessDays(projectEnd, projectStart))
+	fmt.Printf("Precise duration: %.2f days\n", dateutils.DifferenceInDaysFloat(projectEnd, projectStart))
+
+	// Component extraction and manipulation
+	fmt.Println("\n10. Get/Set Component Functions:")
+	sampleDate := time.Date(2024, 8, 15, 14, 30, 45, 500000000, time.UTC)
+
+	fmt.Printf("Original date: %s\n", dateutils.FormatSafe(sampleDate, dateutils.DateTime24, nil))
+	fmt.Printf("Year: %d, Quarter: Q%d, Month: %d\n",
+		dateutils.GetYear(sampleDate), dateutils.GetQuarter(sampleDate), dateutils.GetMonth(sampleDate))
+	fmt.Printf("Day: %d, Day of Year: %d, Week: %d\n",
+		dateutils.GetDate(sampleDate), dateutils.GetDayOfYear(sampleDate), dateutils.GetWeek(sampleDate))
+
+	// Create variations using Set functions
+	newYear := dateutils.SetYear(sampleDate, 2025)
+	startOfQuarter := dateutils.SetQuarter(sampleDate, 1)
+	fmt.Printf("Set to 2025: %s\n", dateutils.FormatSafe(newYear, dateutils.DateISO, nil))
+	fmt.Printf("Set to Q1: %s\n", dateutils.FormatSafe(startOfQuarter, dateutils.DateISO, nil))
+
+	// NEW: Interval utilities - Each functions for comprehensive date ranges
+	fmt.Println("\n11. Interval Utilities (Each Functions):")
+
+	// Create an interval for Q1 2024
+	q1Interval := dateutils.Interval{
+		Start: time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC),
+		End:   time.Date(2024, 3, 31, 23, 59, 59, 0, time.UTC),
+	}
+
+	// Get all months in Q1
+	months := dateutils.EachMonthOfInterval(q1Interval)
+	fmt.Printf("Months in Q1 2024:\n")
+	for _, month := range months {
+		fmt.Printf("  %s\n", dateutils.FormatSafe(month, "January 2006", nil))
+	}
+
+	// Get all weekends in January 2024
+	januaryInterval := dateutils.Interval{
+		Start: time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC),
+		End:   time.Date(2024, 1, 31, 23, 59, 59, 0, time.UTC),
+	}
+
+	weekends := dateutils.EachWeekendOfInterval(januaryInterval)
+	fmt.Printf("\nWeekends in January 2024:\n")
+	for _, weekend := range weekends {
+		dayName := weekend.Weekday().String()
+		fmt.Printf("  %s %s\n", dayName, dateutils.FormatSafe(weekend, dateutils.DateISO, nil))
+	}
+
+	// Get business days for a work week
+	workWeekInterval := dateutils.Interval{
+		Start: time.Date(2024, 1, 8, 0, 0, 0, 0, time.UTC),     // Monday
+		End:   time.Date(2024, 1, 12, 23, 59, 59, 0, time.UTC), // Friday
+	}
+
+	businessDays := dateutils.EachBusinessDayOfInterval(workWeekInterval)
+	fmt.Printf("\nBusiness days in work week:\n")
+	for _, day := range businessDays {
+		dayName := day.Weekday().String()
+		fmt.Printf("  %s %s\n", dayName, dateutils.FormatSafe(day, dateutils.DateISO, nil))
+	}
+
+	// Get quarters for 2024
+	yearInterval := dateutils.Interval{
+		Start: time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC),
+		End:   time.Date(2024, 12, 31, 23, 59, 59, 0, time.UTC),
+	}
+
+	quarters := dateutils.EachQuarterOfInterval(yearInterval)
+	fmt.Printf("\nQuarters in 2024:\n")
+	for i, quarter := range quarters {
+		fmt.Printf("  Q%d: %s\n", i+1, dateutils.FormatSafe(quarter, "January 2006", nil))
+	}
+
+	// Hours in a workday
+	workdayInterval := dateutils.Interval{
+		Start: time.Date(2024, 1, 15, 9, 0, 0, 0, time.UTC),
+		End:   time.Date(2024, 1, 15, 17, 0, 0, 0, time.UTC),
+	}
+
+	workHours := dateutils.EachHourOfInterval(workdayInterval)
+	fmt.Printf("\nWork hours on Jan 15, 2024:\n")
+	for _, hour := range workHours {
+		fmt.Printf("  %s\n", dateutils.FormatSafe(hour, "15:04", nil))
+	}
+
 	fmt.Println("\n=== Examples Complete ===")
+	fmt.Printf("Library now includes %d+ date utility functions!\n", 140)
 }

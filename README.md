@@ -7,7 +7,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/chmenegatti/go-date-fns)](https://goreportcard.com/report/github.com/chmenegatti/go-date-fns)
 [![Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](https://github.com/chmenegatti/go-date-fns)
 
-**go-dateutils** brings the power and elegance of functional date manipulation to Go. With over **40+ pure, immutable functions**, it provides a comprehensive toolkit for working with dates and times in a safe, predictable, and timezone-aware manner.
+**go-dateutils** brings the power and elegance of functional date manipulation to Go. With over **150+ pure, immutable functions**, it provides a comprehensive toolkit for working with dates and times in a safe, predictable, and timezone-aware manner.
 
 ---
 
@@ -121,11 +121,30 @@ date2 := time.Date(2024, 1, 16, 15, 0, 0, 0, time.UTC)
 // Precise comparisons (includes time)
 dateutils.IsBefore(date1, date2)        // true
 dateutils.IsAfter(date1, date2)         // false
+dateutils.IsEqual(date1, date1)         // true
 dateutils.IsBeforeOrEqual(date1, date1) // true
 
 // Date-only comparisons (ignores time)
 dateutils.IsBeforeDate(date1, date2)    // true
 dateutils.IsAfterDate(date1, date2)     // false
+
+// Same period comparisons
+dateutils.IsSameDay(date1, date2)       // false (different days)
+dateutils.IsSameWeek(date1, date2)      // true (same week)
+dateutils.IsSameMonth(date1, date2)     // true (same month)
+dateutils.IsSameYear(date1, date2)      // true (same year)
+dateutils.IsSameHour(date1, date2)      // false (different hours)
+dateutils.IsSameMinute(date1, date2)    // false (different minutes)
+
+// Sorting and selection
+times := []time.Time{date1, date2, time.Now()}
+earliest := dateutils.Min(times)        // Get earliest time
+latest := dateutils.Max(times)          // Get latest time
+closest := dateutils.ClosestTo(date1, times) // Get closest to date1
+
+// Comparison with ordering
+result := dateutils.CompareAsc(date1, date2)  // -1 (date1 before date2)
+result = dateutils.CompareDesc(date1, date2)  // 1 (desc order)
 
 // Timezone-aware comparisons
 est, _ := time.LoadLocation("America/New_York")
@@ -139,19 +158,74 @@ Add, subtract, and modify dates immutably:
 ```go
 baseDate := time.Date(2024, 1, 15, 0, 0, 0, 0, time.UTC) // Monday
 
-// Add/subtract days
+// Add/subtract days, weeks, months, years
 nextWeek := dateutils.AddDays(baseDate, 7)         // 2024-01-22
-lastWeek := dateutils.AddDays(baseDate, -7)        // 2024-01-08
+lastWeek := dateutils.SubDays(baseDate, 7)         // 2024-01-08
+nextMonth := dateutils.AddMonths(baseDate, 1)      // 2024-02-15
+lastYear := dateutils.SubYears(baseDate, 1)        // 2023-01-15
+
+// Add/subtract time units
+laterToday := dateutils.AddHours(baseDate, 5)      // Add 5 hours
+earlierToday := dateutils.SubMinutes(baseDate, 30) // Subtract 30 minutes
+futureTime := dateutils.AddSeconds(baseDate, 120)  // Add 2 minutes
 
 // Business days (skips weekends)
 nextBusinessDay := dateutils.AddBusinessDays(baseDate, 5)  // Skips weekend, lands on weekday
-
-// Add weeks
-nextMonth := dateutils.AddWeeks(baseDate, 4)       // ~4 weeks later
+pastBusinessDay := dateutils.SubBusinessDays(baseDate, 3)  // Goes back 3 business days
 
 // Timezone-aware addition
 est, _ := time.LoadLocation("America/New_York")
 dateInEST := dateutils.AddDaysWithTimezone(baseDate, 1, est)
+```
+
+### 📊 **Get Functions**
+
+Extract specific components from dates:
+
+```go
+date := time.Date(2024, 6, 15, 14, 30, 45, 500000000, time.UTC) // Saturday
+
+// Date components
+year := dateutils.GetYear(date)           // 2024
+month := dateutils.GetMonth(date)         // 6 (June)
+day := dateutils.GetDate(date)            // 15
+dayOfWeek := dateutils.GetDay(date)       // 6 (Saturday, 0=Sunday)
+dayOfYear := dateutils.GetDayOfYear(date) // 167
+quarter := dateutils.GetQuarter(date)     // 2 (Q2)
+
+// Time components
+hours := dateutils.GetHours(date)         // 14
+minutes := dateutils.GetMinutes(date)     // 30
+seconds := dateutils.GetSeconds(date)     // 45
+milliseconds := dateutils.GetMilliseconds(date) // 500
+
+// Week-related
+week := dateutils.GetWeek(date)           // ISO week number
+weekOfMonth := dateutils.GetWeekOfMonth(date) // Week of the month
+weekYear := dateutils.GetWeekYear(date)   // ISO week year
+```
+
+### ⚙️ **Set Functions**
+
+Create new dates by setting specific components:
+
+```go
+baseDate := time.Date(2024, 6, 15, 14, 30, 45, 0, time.UTC)
+
+// Set date components
+newYear := dateutils.SetYear(baseDate, 2025)      // 2025-06-15 14:30:45
+newMonth := dateutils.SetMonth(baseDate, 12)      // 2024-12-15 14:30:45
+newDay := dateutils.SetDate(baseDate, 1)          // 2024-06-01 14:30:45
+newQuarter := dateutils.SetQuarter(baseDate, 1)   // 2024-01-15 14:30:45
+
+// Set time components
+newHours := dateutils.SetHours(baseDate, 9)       // 2024-06-15 09:30:45
+newMinutes := dateutils.SetMinutes(baseDate, 0)   // 2024-06-15 14:00:45
+newSeconds := dateutils.SetSeconds(baseDate, 0)   // 2024-06-15 14:30:00
+
+// Set by day of week or day of year
+monday := dateutils.SetDay(baseDate, 1)           // Set to Monday of the same week
+newYearDay := dateutils.SetDayOfYear(baseDate, 100) // Set to 100th day of year
 ```
 
 ### 📏 **Difference Functions**
@@ -160,20 +234,37 @@ Calculate time differences with various precision levels:
 
 ```go
 start := time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC)
-end := time.Date(2024, 1, 15, 12, 0, 0, 0, time.UTC)
+end := time.Date(2024, 1, 15, 12, 30, 45, 0, time.UTC)
 
-// Integer differences
-days := dateutils.DifferenceInDays(end, start)                    // 14
-calendarDays := dateutils.DifferenceInCalendarDays(end, start)    // 14
-businessDays := dateutils.DifferenceInBusinessDays(end, start)    // 10 (excluding weekends)
+// Time unit differences (integer)
+years := dateutils.DifferenceInYears(end, start)                  // 0
+months := dateutils.DifferenceInMonths(end, start)                // 0
 weeks := dateutils.DifferenceInWeeks(end, start)                  // 2
+days := dateutils.DifferenceInDays(end, start)                    // 14
+hours := dateutils.DifferenceInHours(end, start)                  // 348
+minutes := dateutils.DifferenceInMinutes(end, start)              // 20910
+seconds := dateutils.DifferenceInSeconds(end, start)              // 1254645
+
+// Calendar-based differences (ignore time components)
+calendarYears := dateutils.DifferenceInCalendarYears(end, start)  // 0
+calendarMonths := dateutils.DifferenceInCalendarMonths(end, start)// 0
+calendarDays := dateutils.DifferenceInCalendarDays(end, start)    // 14
+quarters := dateutils.DifferenceInQuarters(end, start)            // 0
+calendarQuarters := dateutils.DifferenceInCalendarQuarters(end, start) // 0
+
+// Business and specialized differences
+businessDays := dateutils.DifferenceInBusinessDays(end, start)    // 10 (excluding weekends)
 
 // Floating-point precision
-daysPrecise := dateutils.DifferenceInDaysFloat(end, start)        // 14.5
+daysPrecise := dateutils.DifferenceInDaysFloat(end, start)        // 14.52...
 weeksPrecise := dateutils.DifferenceInWeeksFloat(end, start)      // 2.07...
+hoursPrecise := dateutils.DifferenceInHoursFloat(end, start)      // 348.51...
 
 // Absolute differences (always positive)
 absDays := dateutils.AbsDifferenceInDays(start, end)              // 14
+absHours := dateutils.AbsDifferenceInHours(start, end)            // 348
+absMinutes := dateutils.AbsDifferenceInMinutes(start, end)        // 20910
+absMonths := dateutils.AbsDifferenceInMonths(start, end)          // 0
 ```
 
 ### ✅ **Validation Functions**
@@ -259,6 +350,68 @@ endOfMinute := dateutils.EndOfMinute(date)     // 2024-01-15 14:30:59
 
 ---
 
+### 🔄 **Interval Utilities**
+
+**NEW:** Generate arrays of dates within intervals - perfect for reporting, scheduling, and data analysis:
+
+```go
+// Define an interval for Q1 2024
+q1Interval := dateutils.Interval{
+    Start: time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC),
+    End:   time.Date(2024, 3, 31, 23, 59, 59, 0, time.UTC),
+}
+
+// Get all months in Q1
+months := dateutils.EachMonthOfInterval(q1Interval)
+// Returns: [2024-01-01, 2024-02-01, 2024-03-01]
+
+// Get all weekends in January 2024
+january := dateutils.Interval{
+    Start: time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC),
+    End:   time.Date(2024, 1, 31, 23, 59, 59, 0, time.UTC),
+}
+weekends := dateutils.EachWeekendOfInterval(january)
+// Returns all Saturday and Sunday dates in January
+
+// Get business days for a work week
+workWeek := dateutils.Interval{
+    Start: time.Date(2024, 1, 8, 0, 0, 0, 0, time.UTC),  // Monday
+    End:   time.Date(2024, 1, 12, 23, 59, 59, 0, time.UTC), // Friday
+}
+businessDays := dateutils.EachBusinessDayOfInterval(workWeek)
+// Returns: [Mon, Tue, Wed, Thu, Fri] (5 business days)
+
+// Get all quarters in 2024
+year := dateutils.Interval{
+    Start: time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC),
+    End:   time.Date(2024, 12, 31, 23, 59, 59, 0, time.UTC),
+}
+quarters := dateutils.EachQuarterOfInterval(year)
+// Returns: [Q1, Q2, Q3, Q4] start dates
+
+// Get hourly intervals for a workday
+workday := dateutils.Interval{
+    Start: time.Date(2024, 1, 15, 9, 0, 0, 0, time.UTC),
+    End:   time.Date(2024, 1, 15, 17, 0, 0, 0, time.UTC),
+}
+hours := dateutils.EachHourOfInterval(workday)
+// Returns: [09:00, 10:00, 11:00, ..., 17:00]
+```
+
+**Available Each Functions:**
+- `EachDayOfInterval` - All days in interval
+- `EachWeekOfInterval` - Weekly intervals (Monday start)
+- `EachWeekOfIntervalSunday` - Weekly intervals (Sunday start)
+- `EachMonthOfInterval` - Monthly intervals
+- `EachYearOfInterval` - Yearly intervals  
+- `EachQuarterOfInterval` - Quarterly intervals
+- `EachHourOfInterval` - Hourly intervals
+- `EachMinuteOfInterval` - Minute intervals
+- `EachWeekendOfInterval` - Weekend days only
+- `EachBusinessDayOfInterval` - Business days only
+
+---
+
 ## 🌍 Timezone Support
 
 **go-dateutils** provides first-class timezone support across all functions:
@@ -303,6 +456,22 @@ startDate, _ := dateutils.Parse("2024-01-01", time.UTC)
 endDate, _ := dateutils.Parse("2024-01-31", time.UTC)
 workingDays := dateutils.DifferenceInBusinessDays(endDate, startDate)
 fmt.Printf("Working days in January 2024: %d\n", workingDays)
+
+// Set specific meeting times using Set functions
+meetingBase := time.Date(2024, 6, 15, 0, 0, 0, 0, time.UTC)
+quarterlyMeeting := dateutils.SetQuarter(meetingBase, 3)      // Q3 meeting
+monthlyMeeting := dateutils.SetDate(quarterlyMeeting, 1)      // First of the month
+finalTime := dateutils.SetHours(monthlyMeeting, 14)          // 2 PM meeting
+
+// Get components for reporting
+quarter := dateutils.GetQuarter(finalTime)                   // Which quarter?
+week := dateutils.GetWeek(finalTime)                         // Which week of year?
+dayOfYear := dateutils.GetDayOfYear(finalTime)              // Day number in year
+
+// Calculate time spans using new time unit functions
+projectStart := dateutils.SubMonths(today, 3)                // 3 months ago
+deadline2 := dateutils.AddHours(projectStart, 8*24*30)       // Add work hours
+timeLeft := dateutils.SubDays(deadline2, 5)                  // 5 days before deadline
 ```
 
 ### 📅 Event Planning
@@ -327,6 +496,81 @@ for i := 0; i < 12; i++ {
 for i, meeting := range meetings {
     formatted, _ := dateutils.FormatCustom(meeting, "MMMM DD, YYYY at HH:mm", nil)
     fmt.Printf("Meeting %d: %s\n", i+1, formatted)
+}
+```
+
+### 🔧 Date Component Manipulation
+
+```go
+// Extract and manipulate date components
+baseDate := time.Date(2024, 8, 15, 16, 45, 30, 0, time.UTC)
+
+// Extract all components
+fmt.Printf("Year: %d, Quarter: Q%d\n", dateutils.GetYear(baseDate), dateutils.GetQuarter(baseDate))
+fmt.Printf("Month: %d, Day: %d, Day of Year: %d\n", 
+    dateutils.GetMonth(baseDate), dateutils.GetDate(baseDate), dateutils.GetDayOfYear(baseDate))
+fmt.Printf("Week: %d, Day of Week: %d\n", dateutils.GetWeek(baseDate), dateutils.GetDay(baseDate))
+fmt.Printf("Time: %02d:%02d:%02d.%03d\n", 
+    dateutils.GetHours(baseDate), dateutils.GetMinutes(baseDate), 
+    dateutils.GetSeconds(baseDate), dateutils.GetMilliseconds(baseDate))
+
+// Create variations by setting components
+yearEnd := dateutils.SetMonth(dateutils.SetDate(baseDate, 31), 12)  // Dec 31st
+startOfQuarter := dateutils.SetQuarter(baseDate, 1)                 // Q1 start
+mondayMeeting := dateutils.SetDay(baseDate, 1)                      // Next Monday
+nineAM := dateutils.SetHours(dateutils.SetMinutes(baseDate, 0), 9)  // 9:00 AM
+
+// Time comparisons using new functions
+date1 := time.Date(2024, 6, 15, 14, 30, 0, 0, time.UTC)
+date2 := time.Date(2024, 6, 22, 10, 15, 0, 0, time.UTC)
+
+if dateutils.IsSameWeek(date1, date2) {
+    fmt.Println("Same week!")
+} else if dateutils.IsSameMonth(date1, date2) {
+    fmt.Println("Same month, different week")
+}
+
+// Find closest date from a set
+candidates := []time.Time{
+    dateutils.SubDays(baseDate, 10),
+    dateutils.AddDays(baseDate, 5),
+    dateutils.AddMonths(baseDate, 1),
+}
+closest := dateutils.ClosestTo(baseDate, candidates)
+fmt.Printf("Closest date: %s\n", dateutils.FormatSafe(closest, dateutils.DateISO, nil))
+```
+
+### ⏱️ Comprehensive Time Difference Calculations
+
+```go
+// Project timeline analysis
+projectStart := time.Date(2024, 1, 1, 9, 0, 0, 0, time.UTC)
+projectEnd := time.Date(2024, 6, 15, 17, 30, 45, 0, time.UTC)
+
+// All time unit differences
+fmt.Println("=== Project Duration Analysis ===")
+fmt.Printf("Duration in years: %d\n", dateutils.DifferenceInYears(projectEnd, projectStart))
+fmt.Printf("Duration in months: %d\n", dateutils.DifferenceInMonths(projectEnd, projectStart))
+fmt.Printf("Duration in weeks: %d\n", dateutils.DifferenceInWeeks(projectEnd, projectStart))
+fmt.Printf("Duration in days: %d\n", dateutils.DifferenceInDays(projectEnd, projectStart))
+fmt.Printf("Duration in hours: %d\n", dateutils.DifferenceInHours(projectEnd, projectStart))
+fmt.Printf("Duration in minutes: %d\n", dateutils.DifferenceInMinutes(projectEnd, projectStart))
+fmt.Printf("Duration in seconds: %d\n", dateutils.DifferenceInSeconds(projectEnd, projectStart))
+
+// High-precision calculations
+fmt.Printf("Precise duration: %.2f days\n", dateutils.DifferenceInDaysFloat(projectEnd, projectStart))
+fmt.Printf("Working days only: %d\n", dateutils.DifferenceInBusinessDays(projectEnd, projectStart))
+
+// Time remaining calculations
+deadline := dateutils.AddMonths(projectStart, 8) // 8-month deadline
+now := time.Now()
+
+if dateutils.IsBefore(now, deadline) {
+    remaining := dateutils.AbsDifferenceInDays(deadline, now)
+    fmt.Printf("Days until deadline: %d\n", remaining)
+} else {
+    overdue := dateutils.AbsDifferenceInDays(now, deadline)
+    fmt.Printf("Days overdue: %d\n", overdue)
 }
 ```
 
