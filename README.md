@@ -67,6 +67,7 @@ func main() {
 ## 📚 Complete Feature Overview
 
 ### 🔍 **Parsing Functions**
+
 Convert strings to time.Time objects with intelligent format detection:
 
 ```go
@@ -86,6 +87,7 @@ isValid := dateutils.IsValidISO("2024-01-15T14:30:00Z")
 ```
 
 ### 🎨 **Formatting Functions**
+
 Transform dates into human-readable strings:
 
 ```go
@@ -109,6 +111,7 @@ withDefault := dateutils.FormatWithDefault(date, dateutils.DateISO, nil, "N/A")
 ```
 
 ### ⚖️ **Comparison Functions**
+
 Compare dates with precision and timezone awareness:
 
 ```go
@@ -130,6 +133,7 @@ dateutils.IsBeforeInTimezone(date1, date2, est)
 ```
 
 ### 🔧 **Manipulation Functions**
+
 Add, subtract, and modify dates immutably:
 
 ```go
@@ -151,6 +155,7 @@ dateInEST := dateutils.AddDaysWithTimezone(baseDate, 1, est)
 ```
 
 ### 📏 **Difference Functions**
+
 Calculate time differences with various precision levels:
 
 ```go
@@ -172,6 +177,7 @@ absDays := dateutils.AbsDifferenceInDays(start, end)              // 14
 ```
 
 ### ✅ **Validation Functions**
+
 Comprehensive date validation and checking:
 
 ```go
@@ -216,6 +222,7 @@ dateutils.IsSameYear(date1, date2)         // true
 ```
 
 ### 📅 **Period Utility Functions**
+
 Get the start and end of various time periods:
 
 ```go
@@ -450,7 +457,7 @@ go test -race ./...
 
 ### Example Test Results
 
-```
+```bash
 === RUN   TestAddDays
 === RUN   TestAddBusinessDays
 === RUN   TestFormat
@@ -586,7 +593,7 @@ const (
 
 ### Benchmark Results
 
-```
+```bash
 BenchmarkAddDays-12                50000000    23.4 ns/op      0 B/op    0 allocs/op
 BenchmarkAddBusinessDays-12         5000000   245.6 ns/op      0 B/op    0 allocs/op
 BenchmarkFormat-12                  2000000   654.3 ns/op     48 B/op    3 allocs/op
@@ -639,6 +646,7 @@ result, _ := dateutils.Format(
 ### Q: Why choose go-dateutils over the standard time package?
 
 **A:** While Go's `time` package is excellent, **go-dateutils** provides:
+
 - Higher-level, more intuitive functions
 - Consistent error handling patterns  
 - Business logic functions (like business days)
@@ -652,6 +660,7 @@ result, _ := dateutils.Format(
 ### Q: Can I use go-dateutils in production?
 
 **A:** Absolutely! The library is production-ready with:
+
 - 100% test coverage
 - Comprehensive benchmarks
 - Zero external dependencies
@@ -672,7 +681,7 @@ result, _ := dateutils.Format(
 - 📚 **Documentation**: [pkg.go.dev](https://pkg.go.dev/github.com/chmenegatti/go-date-fns)
 - 🐛 **Bug Reports**: [GitHub Issues](https://github.com/chmenegatti/go-date-fns/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/chmenegatti/go-date-fns/discussions)
-- 📧 **Email**: support@go-dateutils.com
+- 📧 **Email**: <support@go-dateutils.com>
 
 ---
 
