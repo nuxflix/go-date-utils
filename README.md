@@ -701,7 +701,7 @@ MIT License - see the [LICENSE](LICENSE) file for details.
 
 <div align="center">
 
-**Made with 🗓️ and ❤️ for the Go community**
+## Made with 🗓️ and ❤️ for the Go community
 
 [⭐ Star us on GitHub](https://github.com/chmenegatti/go-date-fns) | [🐛 Report Bug](https://github.com/chmenegatti/go-date-fns/issues) | [💡 Request Feature](https://github.com/chmenegatti/go-date-fns/issues)
 
