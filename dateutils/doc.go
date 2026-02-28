@@ -2,26 +2,28 @@
 // It offers pure and immutable functions for date manipulation, parsing, formatting,
 // comparison, and validation with timezone support and zero external dependencies.
 //
-// Key Features:
-//   - Pure and immutable functions
-//   - Timezone-aware operations
-//   - Zero external dependencies
+// # Key Features
+//
+//   - Pure and immutable functions (original dates are never modified)
+//   - Timezone-aware operations across all functions
+//   - Zero external dependencies (only Go standard library)
 //   - WebAssembly compatible
-//   - Comprehensive test coverage
+//   - 100% test coverage with benchmarks
 //
-// The library is organized into several categories of functions:
+// # Function Categories
 //
-// Parsing: Parse, ParseISO, ParseWithFormat
-// Formatting: Format, FormatCustom, FormatSafe
-// Comparison: IsBefore, IsAfter, IsEqual
-// Manipulation: AddDays, AddHours, AddMonths, etc.
-// Differences: DifferenceInDays, DifferenceInHours, etc.
-// Validation: IsValid, IsLeapYear, IsWeekend, etc.
-// Period Utils: StartOfDay, EndOfDay, StartOfWeek, etc.
+// Parsing: [Parse], [ParseISO], [ParseWithFormat]
+// Formatting: [Format], [FormatCustom], [FormatSafe], [FormatDistance]
+// Comparison: [IsBefore], [IsAfter], [IsEqual], [IsSameDay], [IsSameWeek]
+// Manipulation: [AddDays], [AddHours], [AddMonths], [SubDays]
+// Differences: [DifferenceInDays], [DifferenceInHours], [DifferenceInBusinessDays]
+// Validation: [IsValid], [IsLeapYear], [IsWeekend], [IsWithinInterval]
+// Period Utils: [StartOfDay], [EndOfDay], [StartOfWeek], [StartOfMonth]
+// Interval: [EachDayOfInterval], [EachWeekOfInterval], [EachBusinessDayOfInterval]
 //
-// Example usage:
+// # Example
 //
-//	import "github.com/cesar/go-dateutils/dateutils"
+//	import "github.com/chmenegatti/go-date-fns/dateutils"
 //
 //	// Parse and format dates
 //	date, err := dateutils.Parse("2023-12-25", time.UTC)
@@ -40,8 +42,10 @@
 //	// Validation and comparison
 //	isWeekend := dateutils.IsWeekend(date)
 //	isBefore := dateutils.IsBefore(date, nextWeek)
+//	fmt.Println(isWeekend, isBefore)
 //
 //	// Period utilities
 //	startOfWeek := dateutils.StartOfWeek(date)
 //	endOfMonth := dateutils.EndOfMonth(date)
+//	fmt.Println(startOfWeek, endOfMonth)
 package dateutils

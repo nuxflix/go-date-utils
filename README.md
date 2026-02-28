@@ -2,10 +2,11 @@
 
 > A modern, functional date utility library for Go, inspired by the beloved date-fns JavaScript library.
 
-[![Go Version](https://img.shields.io/badge/Go-%3E%3D%201.19-007d9c.svg)](https://golang.org/)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Go Version](https://img.shields.io/badge/Go-%3E%3D%201.21-007d9c.svg)](https://golang.org/)
+[![License: LGPL v2.1](https://img.shields.io/badge/License-LGPL_v2.1-blue.svg)](https://www.gnu.org/licenses/lgpl-2.1)
 [![Go Report Card](https://goreportcard.com/badge/github.com/chmenegatti/go-date-fns)](https://goreportcard.com/report/github.com/chmenegatti/go-date-fns)
-[![Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](https://github.com/chmenegatti/go-date-fns)
+[![CI](https://github.com/chmenegatti/go-date-fns/actions/workflows/ci.yml/badge.svg)](https://github.com/chmenegatti/go-date-fns/actions/workflows/ci.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/chmenegatti/go-date-fns.svg)](https://pkg.go.dev/github.com/chmenegatti/go-date-fns)
 
 **go-date-fns** brings the power and elegance of functional date manipulation to Go. With over **150+ pure, immutable functions**, it provides a comprehensive toolkit for working with dates and times in a safe, predictable, and timezone-aware manner.
 
@@ -787,23 +788,28 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 git clone https://github.com/chmenegatti/go-date-fns.git
 cd go-date-fns
 
-# Run tests
-go test ./...
+# Run tests with race detector
+go test -race ./...
 
 # Run benchmarks
 go test -bench=. ./...
 
 # Check code coverage
 go test -cover ./...
+
+# Lint
+go vet ./...
 ```
 
 ### Adding New Functions
 
-1. Create the function in the appropriate file
-2. Add comprehensive tests
-3. Add benchmarks
-4. Update documentation
-5. Run all tests and ensure they pass
+1. Create the function in the appropriate file (see existing files for style)
+2. Add comprehensive unit tests with edge cases
+3. Add benchmarks in the `_test.go` file
+4. Update `doc.go` if exposing new public API
+5. Run all tests: `go test -race ./...`
+
+For more details, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
@@ -931,7 +937,7 @@ result, _ := dateutils.Format(
 
 ## 📄 License
 
-MIT License - see the [LICENSE](LICENSE) file for details.
+LGPL-2.1 License - see the [LICENSE](LICENSE) file for details.
 
 ---
 

@@ -116,7 +116,9 @@ func RoundToNearestMinutes(t time.Time, nearestTo int) time.Time {
 	remainder := minutes % nearestTo
 
 	var adjustedMinutes int
-	if remainder < nearestTo/2 {
+	// Use float64 comparison to avoid integer division truncation.
+	// e.g. for nearestTo=5, threshold should be 2.5, not 2 (int division).
+	if float64(remainder) < float64(nearestTo)/2.0 {
 		// Round down
 		adjustedMinutes = minutes - remainder
 	} else {
