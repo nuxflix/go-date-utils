@@ -7,6 +7,8 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/chmenegatti/go-date-fns)](https://goreportcard.com/report/github.com/chmenegatti/go-date-fns)
 [![CI](https://github.com/chmenegatti/go-date-fns/actions/workflows/ci.yml/badge.svg)](https://github.com/chmenegatti/go-date-fns/actions/workflows/ci.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/chmenegatti/go-date-fns.svg)](https://pkg.go.dev/github.com/chmenegatti/go-date-fns)
+[![Coverage](https://codecov.io/gh/chmenegatti/go-date-fns/branch/main/graph/badge.svg)](https://app.codecov.io/gh/chmenegatti/go-date-fns)
+
 
 **go-date-fns** brings the power and elegance of functional date manipulation to Go. With over **150+ pure, immutable functions**, it provides a comprehensive toolkit for working with dates and times in a safe, predictable, and timezone-aware manner.
 
