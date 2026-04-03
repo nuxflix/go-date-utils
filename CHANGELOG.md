@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `IsSameSecond` — check whether two times fall in the same calendar second.
+
 ### Fixed
 
 - Corrected `AddBusinessDays` so weekend start dates count the next or previous weekday correctly.
