@@ -34,7 +34,9 @@ This Code of Conduct applies within all community spaces, and also applies when 
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by opening a GitHub issue or contacting the maintainers directly. All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior should be reported privately to the project maintainers through the repository's available contact channels. Do not include sensitive personal information in a public issue or discussion. Security vulnerabilities must be reported according to [SECURITY.md](SECURITY.md), not through the Code of Conduct process.
+
+All complaints will be reviewed promptly and fairly. The project will protect the reporter's privacy as far as practical, share information only with people who need it to investigate, and avoid retaliation against anyone who reports a concern in good faith.
 
 ## Attribution
 
