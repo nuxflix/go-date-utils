@@ -1,4 +1,4 @@
-# go-dateutils - Complete Function Reference
+# go-date-fns - Complete Function Reference
 
 A comprehensive date utility library for Go, inspired by date-fns with functional programming principles.
 

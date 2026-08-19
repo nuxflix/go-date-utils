@@ -134,13 +134,6 @@ func RoundToNearestMinutes(t time.Time, nearestTo int) time.Time {
 	}
 
 	result := time.Date(t.Year(), t.Month(), t.Day(), t.Hour()+hourAdjustment, adjustedMinutes, 0, 0, t.Location())
-
-	// Handle day overflow
-	if result.Day() != t.Day() {
-		result = result.AddDate(0, 0, -1)
-		result = time.Date(result.Year(), result.Month(), result.Day(), 23, adjustedMinutes, 0, 0, t.Location())
-	}
-
 	return result
 }
 
@@ -158,7 +151,7 @@ func StartOfDecade(t time.Time) time.Time {
 }
 
 // EndOfDecade returns the end of the decade for the given date.
-// The decade ends with years ending in 9 (e.g., 2029, 2039).
+// The decade ends with years ending in 9 (e.g., 2029, 2039), at the last nanosecond of that day.
 //
 // Example:
 //
@@ -167,7 +160,7 @@ func StartOfDecade(t time.Time) time.Time {
 func EndOfDecade(t time.Time) time.Time {
 	year := t.Year()
 	decadeEnd := ((year / 10) * 10) + 9
-	return time.Date(decadeEnd, time.December, 31, 23, 59, 59, 999000000, t.Location())
+	return time.Date(decadeEnd, time.December, 31, 23, 59, 59, 999999999, t.Location())
 }
 
 // LastDayOfDecade returns the last day of the decade for the given date.
@@ -206,7 +199,7 @@ func StartOfCentury(t time.Time) time.Time {
 func EndOfCentury(t time.Time) time.Time {
 	year := t.Year()
 	centuryEnd := ((year-1)/100 + 1) * 100
-	return time.Date(centuryEnd, time.December, 31, 23, 59, 59, 999000000, t.Location())
+	return time.Date(centuryEnd, time.December, 31, 23, 59, 59, 999999999, t.Location())
 }
 
 // LastDayOfCentury returns the last day of the century for the given date.

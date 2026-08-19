@@ -4,8 +4,7 @@ import (
 	"time"
 )
 
-// IsValid checks if a time.Time value represents a valid date and time.
-// Returns false for zero time values or invalid dates.
+// IsValid reports whether t is a non-zero time.Time value.
 func IsValid(t time.Time) bool {
 	return !t.IsZero()
 }
@@ -33,14 +32,12 @@ func IsWeekday(t time.Time) bool {
 // If timezone is nil, uses the time's current timezone.
 // Only compares the date part, ignoring the time component.
 func IsToday(t time.Time, timezone *time.Location) bool {
-	if timezone != nil {
-		t = t.In(timezone)
+	if timezone == nil {
+		timezone = t.Location()
 	}
+	t = t.In(timezone)
 
-	now := time.Now()
-	if timezone != nil {
-		now = now.In(timezone)
-	}
+	now := time.Now().In(timezone)
 
 	return isSameDate(t, now)
 }
@@ -49,14 +46,12 @@ func IsToday(t time.Time, timezone *time.Location) bool {
 // If timezone is nil, uses the time's current timezone.
 // Only compares the date part, ignoring the time component.
 func IsTomorrow(t time.Time, timezone *time.Location) bool {
-	if timezone != nil {
-		t = t.In(timezone)
+	if timezone == nil {
+		timezone = t.Location()
 	}
+	t = t.In(timezone)
 
-	tomorrow := time.Now().AddDate(0, 0, 1)
-	if timezone != nil {
-		tomorrow = tomorrow.In(timezone)
-	}
+	tomorrow := time.Now().In(timezone).AddDate(0, 0, 1)
 
 	return isSameDate(t, tomorrow)
 }
@@ -65,14 +60,12 @@ func IsTomorrow(t time.Time, timezone *time.Location) bool {
 // If timezone is nil, uses the time's current timezone.
 // Only compares the date part, ignoring the time component.
 func IsYesterday(t time.Time, timezone *time.Location) bool {
-	if timezone != nil {
-		t = t.In(timezone)
+	if timezone == nil {
+		timezone = t.Location()
 	}
+	t = t.In(timezone)
 
-	yesterday := time.Now().AddDate(0, 0, -1)
-	if timezone != nil {
-		yesterday = yesterday.In(timezone)
-	}
+	yesterday := time.Now().In(timezone).AddDate(0, 0, -1)
 
 	return isSameDate(t, yesterday)
 }

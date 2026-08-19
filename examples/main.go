@@ -55,12 +55,18 @@ func exampleParsing() {
 	}
 
 	// ISO 8601 with timezone
-	iso, _ := dateutils.ParseISO("2024-07-04T19:30:00-05:00", time.UTC)
+	iso, err := dateutils.ParseISO("2024-07-04T19:30:00-05:00", time.UTC)
+	if err != nil {
+		log.Fatalf("parse ISO example: %v", err)
+	}
 	fmt.Printf("  ParseISO(\"2024-07-04T19:30:00-05:00\") → %s (UTC)\n",
 		dateutils.FormatSafe(iso, dateutils.DateTimeISO, nil))
 
 	// Custom format
-	custom, _ := dateutils.ParseWithFormat("25-12-2024", "02-01-2006", time.UTC)
+	custom, err := dateutils.ParseWithFormat("25-12-2024", "02-01-2006", time.UTC)
+	if err != nil {
+		log.Fatalf("parse custom example: %v", err)
+	}
 	fmt.Printf("  ParseWithFormat(\"25-12-2024\", \"02-01-2006\") → %s\n",
 		dateutils.FormatSafe(custom, dateutils.DateISO, nil))
 

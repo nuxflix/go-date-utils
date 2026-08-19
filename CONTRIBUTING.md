@@ -48,7 +48,7 @@ This project adheres to our [Code of Conduct](CODE_OF_CONDUCT.md). By participat
 
 ## Development Setup
 
-**Requirements**: Go 1.21+
+**Requirements**: Go 1.24+
 
 ```bash
 # Run all tests
@@ -243,7 +243,7 @@ feat: add RoundToNearestHours function
 fix: correct RoundToNearestMinutes threshold for odd intervals
 docs: update README with new interval functions
 test: add edge cases for DifferenceInBusinessDays
-chore: update go.mod to Go 1.21
+chore: update go.mod to Go 1.24
 ```
 
 ---

@@ -161,12 +161,12 @@ func TestEndOfISOWeek(t *testing.T) {
 		{
 			name:     "Tuesday September 2, 2014",
 			date:     time.Date(2014, time.September, 2, 11, 55, 0, 0, time.UTC),
-			expected: time.Date(2014, time.September, 7, 23, 59, 59, 999000000, time.UTC), // Sunday
+			expected: time.Date(2014, time.September, 7, 23, 59, 59, 999999999, time.UTC), // Sunday
 		},
 		{
 			name:     "Monday September 1, 2014",
 			date:     time.Date(2014, time.September, 1, 8, 0, 0, 0, time.UTC),
-			expected: time.Date(2014, time.September, 7, 23, 59, 59, 999000000, time.UTC), // Sunday
+			expected: time.Date(2014, time.September, 7, 23, 59, 59, 999999999, time.UTC), // Sunday
 		},
 	}
 
@@ -245,12 +245,12 @@ func TestEndOfISOWeekYear(t *testing.T) {
 		{
 			name:     "July 2, 2005",
 			date:     time.Date(2005, time.July, 2, 0, 0, 0, 0, time.UTC),
-			expected: time.Date(2006, time.January, 1, 23, 59, 59, 999000000, time.UTC), // Sunday
+			expected: time.Date(2006, time.January, 1, 23, 59, 59, 999999999, time.UTC), // Sunday
 		},
 		{
 			name:     "January 1, 2009",
 			date:     time.Date(2009, time.January, 1, 16, 0, 0, 0, time.UTC),
-			expected: time.Date(2010, time.January, 3, 23, 59, 59, 999000000, time.UTC), // Sunday
+			expected: time.Date(2010, time.January, 3, 23, 59, 59, 999999999, time.UTC), // Sunday
 		},
 	}
 
@@ -316,6 +316,12 @@ func TestDifferenceInCalendarISOWeeks(t *testing.T) {
 			laterDate:   time.Date(2014, time.September, 22, 0, 0, 0, 0, time.UTC), // Monday
 			earlierDate: time.Date(2014, time.September, 1, 0, 0, 0, 0, time.UTC),  // Monday
 			expected:    3,
+		},
+		{
+			name:        "Spring DST does not change calendar week count",
+			laterDate:   time.Date(2024, time.March, 18, 0, 0, 0, 0, time.FixedZone("EDT", -4*60*60)),
+			earlierDate: time.Date(2024, time.March, 4, 0, 0, 0, 0, time.FixedZone("EST", -5*60*60)),
+			expected:    2,
 		},
 	}
 

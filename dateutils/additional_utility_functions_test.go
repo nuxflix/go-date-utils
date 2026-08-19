@@ -103,6 +103,12 @@ func TestRoundToNearestMinutes(t *testing.T) {
 			nearestTo: -5,
 			expected:  time.Date(2014, time.June, 10, 12, 7, 30, 0, time.UTC),
 		},
+		{
+			name:      "Round up across midnight",
+			date:      time.Date(2014, time.June, 10, 23, 58, 0, 0, time.UTC),
+			nearestTo: 5,
+			expected:  time.Date(2014, time.June, 11, 0, 0, 0, 0, time.UTC),
+		},
 	}
 
 	for _, tt := range tests {
@@ -157,12 +163,12 @@ func TestEndOfDecade(t *testing.T) {
 		{
 			name:     "Mid-1980s decade",
 			date:     time.Date(1985, time.October, 20, 0, 0, 0, 0, time.UTC),
-			expected: time.Date(1989, time.December, 31, 23, 59, 59, 999000000, time.UTC),
+			expected: time.Date(1989, time.December, 31, 23, 59, 59, 999999999, time.UTC),
 		},
 		{
 			name:     "Start of decade",
 			date:     time.Date(2020, time.January, 1, 0, 0, 0, 0, time.UTC),
-			expected: time.Date(2029, time.December, 31, 23, 59, 59, 999000000, time.UTC),
+			expected: time.Date(2029, time.December, 31, 23, 59, 59, 999999999, time.UTC),
 		},
 	}
 
@@ -246,12 +252,12 @@ func TestEndOfCentury(t *testing.T) {
 		{
 			name:     "Mid-20th century",
 			date:     time.Date(1985, time.October, 20, 0, 0, 0, 0, time.UTC),
-			expected: time.Date(2000, time.December, 31, 23, 59, 59, 999000000, time.UTC),
+			expected: time.Date(2000, time.December, 31, 23, 59, 59, 999999999, time.UTC),
 		},
 		{
 			name:     "Start of 21st century",
 			date:     time.Date(2001, time.January, 1, 0, 0, 0, 0, time.UTC),
-			expected: time.Date(2100, time.December, 31, 23, 59, 59, 999000000, time.UTC),
+			expected: time.Date(2100, time.December, 31, 23, 59, 59, 999999999, time.UTC),
 		},
 	}
 

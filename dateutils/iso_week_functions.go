@@ -71,7 +71,7 @@ func StartOfISOWeek(t time.Time) time.Time {
 }
 
 // EndOfISOWeek returns the end of the ISO week (Sunday) for the given date.
-// The time is set to 23:59:59.999.
+// The time is set to 23:59:59.999999999.
 //
 // Example:
 //
@@ -81,7 +81,7 @@ func EndOfISOWeek(t time.Time) time.Time {
 	start := StartOfISOWeek(t)
 	end := start.AddDate(0, 0, 6)
 
-	return time.Date(end.Year(), end.Month(), end.Day(), 23, 59, 59, 999000000, t.Location())
+	return time.Date(end.Year(), end.Month(), end.Day(), 23, 59, 59, 999999999, t.Location())
 }
 
 // LastDayOfISOWeek returns the last day of the ISO week (Sunday) for the given date.
@@ -114,7 +114,7 @@ func StartOfISOWeekYear(t time.Time) time.Time {
 }
 
 // EndOfISOWeekYear returns the end of the ISO week-numbering year for the given date.
-// The time is set to 23:59:59.999.
+// The time is set to 23:59:59.999999999.
 //
 // Example:
 //
@@ -128,7 +128,7 @@ func EndOfISOWeekYear(t time.Time) time.Time {
 	startOfNextYear := StartOfISOWeek(nextYear)
 	endOfYear := startOfNextYear.AddDate(0, 0, -1)
 
-	return time.Date(endOfYear.Year(), endOfYear.Month(), endOfYear.Day(), 23, 59, 59, 999000000, t.Location())
+	return time.Date(endOfYear.Year(), endOfYear.Month(), endOfYear.Day(), 23, 59, 59, 999999999, t.Location())
 }
 
 // LastDayOfISOWeekYear returns the last day of the ISO week-numbering year for the given date.
@@ -161,10 +161,13 @@ func DifferenceInCalendarISOWeeks(laterDate, earlierDate time.Time) int {
 	startOfLaterWeek := StartOfISOWeek(laterDate)
 	startOfEarlierWeek := StartOfISOWeek(earlierDate)
 
-	diff := startOfLaterWeek.Sub(startOfEarlierWeek)
-	weeks := int(diff.Hours() / (24 * 7))
+	// Use UTC date components so DST transitions do not change the number of
+	// calendar weeks between local Mondays.
+	laterUTC := time.Date(startOfLaterWeek.Year(), startOfLaterWeek.Month(), startOfLaterWeek.Day(), 0, 0, 0, 0, time.UTC)
+	earlierUTC := time.Date(startOfEarlierWeek.Year(), startOfEarlierWeek.Month(), startOfEarlierWeek.Day(), 0, 0, 0, 0, time.UTC)
+	diff := laterUTC.Sub(earlierUTC)
 
-	return weeks
+	return int(diff.Hours() / (24 * 7))
 }
 
 // DifferenceInCalendarISOWeekYears calculates the number of calendar ISO week-numbering years between two dates.
