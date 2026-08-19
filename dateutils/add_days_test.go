@@ -91,10 +91,10 @@ func TestAddBusinessDays(t *testing.T) {
 			want:         time.Date(2024, 1, 3, 12, 0, 0, 0, utc), // Wednesday (skips weekend)
 		},
 		{
-			name:         "add business days from Saturday (should start from next Monday)",
+			name:         "add business days from Saturday",
 			time:         time.Date(2023, 12, 30, 12, 0, 0, 0, utc), // Saturday
 			businessDays: 1,
-			want:         time.Date(2024, 1, 2, 12, 0, 0, 0, utc), // Tuesday (skips Sat, Sun, Mon)
+			want:         time.Date(2024, 1, 1, 12, 0, 0, 0, utc), // Monday
 		},
 		{
 			name:         "subtract business days",
@@ -112,7 +112,13 @@ func TestAddBusinessDays(t *testing.T) {
 			name:         "add business days from Sunday",
 			time:         time.Date(2023, 12, 31, 12, 0, 0, 0, utc), // Sunday
 			businessDays: 1,
-			want:         time.Date(2024, 1, 2, 12, 0, 0, 0, utc), // Tuesday (skips Sun, Mon)
+			want:         time.Date(2024, 1, 1, 12, 0, 0, 0, utc), // Monday
+		},
+		{
+			name:         "subtract business days from Sunday",
+			time:         time.Date(2023, 12, 31, 12, 0, 0, 0, utc), // Sunday
+			businessDays: -1,
+			want:         time.Date(2023, 12, 29, 12, 0, 0, 0, utc), // Friday
 		},
 	}
 

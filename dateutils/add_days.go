@@ -30,11 +30,6 @@ func AddBusinessDays(t time.Time, businessDays int) time.Time {
 		remaining = -remaining
 	}
 
-	// If starting from a weekend, move to the next/previous business day first
-	for IsWeekend(result) {
-		result = result.AddDate(0, 0, increment)
-	}
-
 	for remaining > 0 {
 		result = result.AddDate(0, 0, increment)
 
