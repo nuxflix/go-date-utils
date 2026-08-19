@@ -65,6 +65,9 @@ go test -bench=. -benchmem ./...
 
 # Lint
 go vet ./...
+
+# Verify formatting
+test -z "$(gofmt -l .)"
 ```
 
 ---
@@ -252,8 +255,9 @@ chore: update go.mod to Go 1.24
 
 1. Ensure all tests pass: `go test -race ./...`
 2. Ensure `go vet ./...` reports no issues
-3. Fill in the PR template completely
-4. Link the PR to the relevant issue (`Fixes #123`)
-5. Wait for a review — we aim to respond within 3 business days
+3. Ensure formatting passes: `test -z "$(gofmt -l .)"`
+4. Fill in the PR template completely
+5. Link the PR to the relevant issue (`Fixes #123`)
+6. Wait for a review — we aim to respond within 3 business days
 
 **Thank you for contributing!** 🚀

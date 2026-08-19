@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Corrected `AddBusinessDays` so weekend start dates count the next or previous weekday correctly.
+- Fixed `RoundToNearestMinutes` when rounding across midnight.
+- Made ISO calendar-week differences independent of daylight-saving transitions.
+- Corrected `IsToday`, `IsTomorrow`, and `IsYesterday` to calculate dates in the requested or input timezone.
+
+### Changed
+
+- Standardized decade, century, and ISO-week end helpers on nanosecond precision.
+- Clarified that `IsValid` checks for a non-zero `time.Time` value.
+- Improved the example program's handling of parsing errors.
+
+### Documentation and CI
+
+- Aligned project names, repository links, Go version requirements, and function-count references across documentation.
+- Added a `gofmt` validation step to continuous integration.
+
 ---
 
 ## [0.1.0] - 2026-02-28

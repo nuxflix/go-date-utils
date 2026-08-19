@@ -6,6 +6,10 @@
 | ------- | ------------------ |
 | 0.1.x   | :white_check_mark: |
 
+The `main` branch is also supported during development. Security fixes are
+released through the next appropriate version according to the project's
+semantic-versioning policy.
+
 ## Reporting a Vulnerability
 
 If you discover a security vulnerability in **go-date-fns**, please **do not** open a public GitHub issue.
@@ -20,6 +24,9 @@ Please include:
 - Steps to reproduce
 - Potential impact
 - Suggested fix (if available)
+
+Please do not include credentials, private keys, or other sensitive data in a
+report. Test only against your own systems and data.
 
 We will respond within **5 business days** and aim to release a fix within **14 days** of confirmation.
 
