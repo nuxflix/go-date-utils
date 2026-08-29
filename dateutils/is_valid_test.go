@@ -594,6 +594,45 @@ func TestIsSameCentury(t *testing.T) {
 	}
 }
 
+func TestIsSameMillennium(t *testing.T) {
+	utc := time.UTC
+
+	tests := []struct {
+		name string
+		t1   time.Time
+		t2   time.Time
+		want bool
+	}{
+		{
+			name: "same millennium",
+			t1:   time.Date(1001, 1, 15, 15, 30, 0, 0, utc),
+			t2:   time.Date(1999, 12, 31, 8, 45, 0, 0, utc),
+			want: true,
+		},
+		{
+			name: "different millennium",
+			t1:   time.Date(1999, 12, 31, 15, 30, 0, 0, utc),
+			t2:   time.Date(2000, 1, 1, 8, 45, 0, 0, utc),
+			want: false,
+		},
+		{
+			name: "same millennium different timezone",
+			t1:   time.Date(2001, 6, 15, 15, 30, 0, 0, utc),
+			t2:   time.Date(2999, 2, 28, 10, 30, 0, 0, time.FixedZone("UTC+2", 2*3600)),
+			want: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := IsSameMillennium(tt.t1, tt.t2)
+			if got != tt.want {
+				t.Errorf("IsSameMillennium() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func BenchmarkIsLeapYear(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		_ = IsLeapYear(2024)
