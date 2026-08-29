@@ -33,6 +33,12 @@ func IsSameWeek(t1, t2 time.Time) bool {
 	return startOfWeek1.Equal(startOfWeek2)
 }
 
+// IsSameQuarter checks if two times are in the same calendar quarter.
+// The quarter is compared within the same year, so Q1 2023 and Q1 2024 are not equal.
+func IsSameQuarter(t1, t2 time.Time) bool {
+	return t1.Year() == t2.Year() && GetQuarter(t1) == GetQuarter(t2)
+}
+
 // IsSameHour checks if two times are in the same calendar hour.
 // Minutes, seconds, and nanoseconds are ignored.
 // Returns true if both times fall within the same hour.

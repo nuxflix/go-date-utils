@@ -104,6 +104,43 @@ func TestIsSameWeek(t *testing.T) {
 	}
 }
 
+func TestIsSameQuarter(t *testing.T) {
+	tests := []struct {
+		name     string
+		t1       time.Time
+		t2       time.Time
+		expected bool
+	}{
+		{
+			name:     "same quarter same year",
+			t1:       time.Date(2024, 5, 10, 12, 0, 0, 0, time.UTC),
+			t2:       time.Date(2024, 6, 20, 18, 30, 0, 0, time.UTC),
+			expected: true,
+		},
+		{
+			name:     "same quarter different year",
+			t1:       time.Date(2023, 8, 15, 9, 0, 0, 0, time.UTC),
+			t2:       time.Date(2024, 9, 1, 9, 0, 0, 0, time.UTC),
+			expected: false,
+		},
+		{
+			name:     "different quarter same year",
+			t1:       time.Date(2024, 1, 31, 12, 0, 0, 0, time.UTC),
+			t2:       time.Date(2024, 4, 1, 12, 0, 0, 0, time.UTC),
+			expected: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := IsSameQuarter(tt.t1, tt.t2)
+			if result != tt.expected {
+				t.Errorf("IsSameQuarter() = %v, expected %v", result, tt.expected)
+			}
+		})
+	}
+}
+
 func TestIsSameHour(t *testing.T) {
 	tests := []struct {
 		name     string
