@@ -138,6 +138,7 @@ dateutils.IsSameMonth(date1, date2)     // true (same month)
 dateutils.IsSameYear(date1, date2)      // true (same year)
 dateutils.IsSameHour(date1, date2)      // false (different hours)
 dateutils.IsSameMinute(date1, date2)    // false (different minutes)
+dateutils.IsSameSecond(date1, date2)    // false (different seconds)
 
 // Sorting and selection
 times := []time.Time{date1, date2, time.Now()}

@@ -203,6 +203,43 @@ func TestIsSameMinute(t *testing.T) {
 	}
 }
 
+func TestIsSameSecond(t *testing.T) {
+	tests := []struct {
+		name     string
+		t1       time.Time
+		t2       time.Time
+		expected bool
+	}{
+		{
+			name:     "same second, different nanoseconds",
+			t1:       time.Date(2024, 1, 15, 12, 30, 45, 100, time.UTC),
+			t2:       time.Date(2024, 1, 15, 12, 30, 45, 900, time.UTC),
+			expected: true,
+		},
+		{
+			name:     "different seconds",
+			t1:       time.Date(2024, 1, 15, 12, 30, 45, 0, time.UTC),
+			t2:       time.Date(2024, 1, 15, 12, 30, 46, 0, time.UTC),
+			expected: false,
+		},
+		{
+			name:     "same instant, different timezones",
+			t1:       time.Date(2024, 1, 15, 12, 30, 45, 0, time.UTC),
+			t2:       time.Date(2024, 1, 15, 7, 30, 45, 0, time.FixedZone("EST", -5*3600)),
+			expected: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := IsSameSecond(tt.t1, tt.t2)
+			if result != tt.expected {
+				t.Errorf("IsSameSecond() = %v, expected %v", result, tt.expected)
+			}
+		})
+	}
+}
+
 func TestCompareAsc(t *testing.T) {
 	tests := []struct {
 		name     string

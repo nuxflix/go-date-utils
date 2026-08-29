@@ -68,6 +68,22 @@ func IsSameMinute(t1, t2 time.Time) bool {
 		t1.Minute() == t2.Minute()
 }
 
+// IsSameSecond checks if two times are in the same calendar second.
+// Nanoseconds are ignored.
+// Returns true if both times fall within the same second.
+func IsSameSecond(t1, t2 time.Time) bool {
+	// Convert to same timezone for comparison
+	t1 = t1.UTC()
+	t2 = t2.UTC()
+
+	return t1.Year() == t2.Year() &&
+		t1.Month() == t2.Month() &&
+		t1.Day() == t2.Day() &&
+		t1.Hour() == t2.Hour() &&
+		t1.Minute() == t2.Minute() &&
+		t1.Second() == t2.Second()
+}
+
 // CompareAsc compares two times and returns:
 // -1 if t1 is before t2
 //
