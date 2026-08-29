@@ -555,6 +555,45 @@ func TestIsSameDecade(t *testing.T) {
 	}
 }
 
+func TestIsSameCentury(t *testing.T) {
+	utc := time.UTC
+
+	tests := []struct {
+		name string
+		t1   time.Time
+		t2   time.Time
+		want bool
+	}{
+		{
+			name: "same century",
+			t1:   time.Date(1901, 1, 15, 15, 30, 0, 0, utc),
+			t2:   time.Date(1999, 12, 31, 8, 45, 0, 0, utc),
+			want: true,
+		},
+		{
+			name: "different century",
+			t1:   time.Date(1900, 12, 31, 15, 30, 0, 0, utc),
+			t2:   time.Date(2000, 1, 1, 8, 45, 0, 0, utc),
+			want: false,
+		},
+		{
+			name: "same century same date range",
+			t1:   time.Date(2001, 6, 15, 15, 30, 0, 0, utc),
+			t2:   time.Date(2099, 2, 28, 10, 30, 0, 0, time.FixedZone("UTC-5", -5*3600)),
+			want: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := IsSameCentury(tt.t1, tt.t2)
+			if got != tt.want {
+				t.Errorf("IsSameCentury() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func BenchmarkIsLeapYear(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		_ = IsLeapYear(2024)

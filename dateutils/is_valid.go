@@ -128,6 +128,12 @@ func IsSameDecade(t1, t2 time.Time) bool {
 	return (t1.Year()/10) == (t2.Year()/10)
 }
 
+// IsSameCentury checks if two times fall in the same century.
+// Centuries are grouped by year ranges such as 1900-1999 and 2000-2099.
+func IsSameCentury(t1, t2 time.Time) bool {
+	return ((t1.Year()-1)/100) == ((t2.Year()-1)/100)
+}
+
 // Helper function to check if two times have the same date
 func isSameDate(t1, t2 time.Time) bool {
 	return t1.Year() == t2.Year() && t1.Month() == t2.Month() && t1.Day() == t2.Day()
