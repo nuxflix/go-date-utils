@@ -122,6 +122,12 @@ func IsSameYear(t1, t2 time.Time) bool {
 	return t1.Year() == t2.Year()
 }
 
+// IsSameDecade checks if two times fall in the same decade.
+// Decades are grouped by year ranges ending in 0-9, such as 1980-1989.
+func IsSameDecade(t1, t2 time.Time) bool {
+	return (t1.Year()/10) == (t2.Year()/10)
+}
+
 // Helper function to check if two times have the same date
 func isSameDate(t1, t2 time.Time) bool {
 	return t1.Year() == t2.Year() && t1.Month() == t2.Month() && t1.Day() == t2.Day()

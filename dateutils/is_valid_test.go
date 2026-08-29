@@ -516,6 +516,45 @@ func TestIsSameYear(t *testing.T) {
 	}
 }
 
+func TestIsSameDecade(t *testing.T) {
+	utc := time.UTC
+
+	tests := []struct {
+		name string
+		t1   time.Time
+		t2   time.Time
+		want bool
+	}{
+		{
+			name: "same decade",
+			t1:   time.Date(1985, 10, 20, 15, 30, 0, 0, utc),
+			t2:   time.Date(1989, 12, 31, 8, 45, 0, 0, utc),
+			want: true,
+		},
+		{
+			name: "different decade",
+			t1:   time.Date(1989, 12, 31, 15, 30, 0, 0, utc),
+			t2:   time.Date(1990, 1, 1, 8, 45, 0, 0, utc),
+			want: false,
+		},
+		{
+			name: "same decade different timezone",
+			t1:   time.Date(2001, 6, 15, 15, 30, 0, 0, utc),
+			t2:   time.Date(2009, 2, 28, 10, 30, 0, 0, time.FixedZone("UTC-5", -5*3600)),
+			want: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := IsSameDecade(tt.t1, tt.t2)
+			if got != tt.want {
+				t.Errorf("IsSameDecade() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func BenchmarkIsLeapYear(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		_ = IsLeapYear(2024)
